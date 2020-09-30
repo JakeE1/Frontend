@@ -1,5 +1,20 @@
-let numberOfFilms = +prompt(
-    "How much Films Did you saw", "");
+function getLastFilm() {
+
+    let bool = true;
+
+    while (bool != false) {
+
+        let lastWatchingFilm = prompt(
+            "What the last film you watched", "");
+
+        let bool = (lastWatchingFilm == "") ? true :
+            (lastWatchingFilm.length > 0 && lastWatchingFilm.length <= 50) ? false : true;
+    }
+
+    return lastWatchingFilm;
+}
+
+let numberOfFilms = +prompt("number of watched films ?", "");
 
 let personalMovieDB = {
     count: numberOfFilms,
@@ -9,16 +24,26 @@ let personalMovieDB = {
     privat: false,
 };
 
-const lastWatchingFilm = prompt(git 
-        "What the last film you watched", ""),
-    rateOfLastFilm = prompt(
-        "Please rate your last film", ""),
-    lastWatchingFilmSecond = prompt(
-        "What the last film you watched", ""),
-    rateOfLastFilmSecond = prompt(
+ 
+const lastWatchingFilm = getLastFilm();
+    let rateOfLastFilm = prompt(
+        "Please rate your last film", "");
+
+const lastSecondWatchingFilm = getLastFilm(); 
+    let rateOfLastFilmSecond = prompt(
         "Please rate your last film", "");
 
 personalMovieDB.movies[lastWatchingFilm] = rateOfLastFilm;
-personalMovieDB.movies[lastWatchingFilmSecond] = rateOfLastFilmSecond;
+personalMovieDB.movies[lastSecondWatchingFilm] = rateOfLastFilmSecond;
+
+switch(personalMovieDB.count) {
+    case (personalMovieDB.count<10) : 
+    alert("You watched a small amaunt of films"); break;
+    case (personalMovieDB.count>10 && personalMovieDB.count<=30) : 
+    alert("You typical viewer"); break;
+    case (personalMovieDB.count>30) : 
+    alert("Woww you such a big lover of cinema"); break;
+    default: alert("Error"); break;
+}
 
 console.log(personalMovieDB);
