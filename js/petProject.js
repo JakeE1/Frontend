@@ -1,22 +1,6 @@
-function getLastFilm() {
+let numberOfFilms;
 
-    let bool = true;
-
-    while (bool != false) {
-
-        let lastWatchingFilm = prompt(
-            "What the last film you watched", "");
-
-        let bool = (lastWatchingFilm == "") ? true :
-            (lastWatchingFilm.length > 0 && lastWatchingFilm.length <= 50) ? false : true;
-    }
-
-    return lastWatchingFilm;
-}
-
-let numberOfFilms = +prompt("number of watched films ?", "");
-
-let personalMovieDB = {
+const personalMovieDB = {
     count: numberOfFilms,
     movies: {},
     actors: {},
@@ -24,26 +8,64 @@ let personalMovieDB = {
     privat: false,
 };
 
- 
-const lastWatchingFilm = getLastFilm();
-    let rateOfLastFilm = prompt(
-        "Please rate your last film", "");
+personalMovieDB.count = start();
+rememberMyFilm();
+writeYourGenres();
+showMyDB();
+detectPersonalLevel();
 
-const lastSecondWatchingFilm = getLastFilm(); 
-    let rateOfLastFilmSecond = prompt(
-        "Please rate your last film", "");
 
-personalMovieDB.movies[lastWatchingFilm] = rateOfLastFilm;
-personalMovieDB.movies[lastSecondWatchingFilm] = rateOfLastFilmSecond;
 
-switch(personalMovieDB.count) {
-    case (personalMovieDB.count<10) : 
-    alert("You watched a small amaunt of films"); break;
-    case (personalMovieDB.count>10 && personalMovieDB.count<=30) : 
-    alert("You typical viewer"); break;
-    case (personalMovieDB.count>30) : 
-    alert("Woww you such a big lover of cinema"); break;
-    default: alert("Error"); break;
+function writeYourGenres() {
+    for (let index = 0; index < 3; index++) {
+        personalMovieDB.genres[index] = prompt(
+            `Your favorite genre on number ${index+1}`);
+    }
 }
 
-console.log(personalMovieDB);
+function showMyDB() {
+    if (personalMovieDB.privat == false) {
+        console.log(personalMovieDB);
+    }
+}
+
+function start() {
+    numberOfFilms = +prompt("number of watched films ?", "");
+    while (numberOfFilms == '' || numberOfFilms == null ||
+        isNaN(numberOfFilms)) {
+        numberOfFilms = +prompt("number of watched films ?", "");
+    }
+    return numberOfFilms;
+}
+
+function rememberMyFilm() {
+
+    let bool = true,
+        lastFilm = "",
+        rateOfLastFilm = "";
+
+    while (bool != false) {
+
+        lastFilm = prompt(
+            "What the last film you watched", "");
+        rateOfLastFilm = prompt(
+            "Please rate your last film", "");
+
+        bool = (lastFilm == "") ? true :
+            (lastFilm.length <= 50 && lastFilm != null) ? false : true;
+    }
+
+    personalMovieDB.movies[lastFilm] = rateOfLastFilm;
+}
+
+function detectPersonalLevel() {
+    if (personalMovieDB.count < 10) {
+        alert("You watched a small amaunt of films");
+    } else if (personalMovieDB.count > 10 && personalMovieDB.count <= 30) {
+        alert("You typical viewer");
+    } else if (personalMovieDB.count > 30) {
+        alert("Woww you such a big lover of cinema");
+    } else {
+        alert("Error");
+    }
+}
